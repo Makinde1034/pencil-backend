@@ -5,6 +5,19 @@ const articleRoute = require("./routes/articleRoutes.js");
 
 const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pencil?retryWrites=true&w=majority"
 
+
+
+
+const app = express();
+app.use(express.json());
+
+
+app.use(authRoute);
+app.use(articleRoute);
+
+
+const port =  process.env.Port || 4000 
+
 mongoose.connect(durl).then(()=>{
     console.log("connected to mongoDB");
 
@@ -13,14 +26,3 @@ mongoose.connect(durl).then(()=>{
     })
     
 }).catch(err=>console.log(err));
-
-
-const app = express();
-app.use(express.json());
-
-const port = 4000 || process.env.port
-
-
-app.use(authRoute);
-app.use(articleRoute);
-
