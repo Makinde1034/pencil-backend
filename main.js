@@ -16,7 +16,7 @@ app.use(authRoute);
 app.use(articleRoute);
 
 
-const port =  process.env.Port || 4000 
+const port =  process.env.PORT || 4000 
 
 mongoose.connect(durl).then(()=>{
     console.log("connected to mongoDB");
