@@ -6,10 +6,10 @@ const cors = require("cors");
 
 const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pencil?retryWrites=true&w=majority"
 
+const app = express();
 
 app.use(cors())
 
-const app = express();
 app.use(express.json());
 
 
