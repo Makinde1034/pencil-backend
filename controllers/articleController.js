@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 
 // post an article
 exports.postArticle = (req,res) => {
-    User.findOne({_id:req.user_id}).then((hh)=>{
+    User.findOne({_id:req.user_id}).then(hh=>{
         // res.json(hh)
+        console.log(hh.email,  ' hh here')
         Post.create({userId: req.user_id, creator: hh.email, ...req.body}).then((result)=>{
             return User.findByIdAndUpdate(
                 {_id : req.user_id},
@@ -25,10 +26,9 @@ exports.postArticle = (req,res) => {
             res.json("Error occured while trying to create post");
         })
     }).catch((err)=>{
+        console.log(err.message)
         res.json("An error occured while")
-    })
-
-    
+    })    
 } 
 
 // like a post
@@ -106,6 +106,12 @@ exports.getPostsByLikes = async (req, res)=>{
 
 exports.getAllPosts = (req,res) =>{
     Post.find().then((result)=>{
+        res.json(result)
+    })
+}
+
+exports.getUserPosts = (req,res) =>{
+    User.findById(req.body._id).populate("posts").then((result)=>{
         res.json(result)
     })
 }
