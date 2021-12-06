@@ -148,7 +148,7 @@ exports.verifyAccount = async (req,res) =>{
 
 
 exports.findUser = (req,res) =>{
-    User.find({email : req.body.email}).then((result)=>{
+    User.find().then((result)=>{
         res.json(result)
     })
 }
