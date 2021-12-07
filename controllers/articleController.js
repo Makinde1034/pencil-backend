@@ -111,7 +111,7 @@ exports.getAllPosts = (req,res) =>{
 }
 
 exports.getUserPosts = (req,res) =>{
-    User.findById(req.body._id).populate("posts").then((result)=>{
+    User.findById(req.params.id).populate("posts").then((result)=>{
         res.json(result)
     })
 }
