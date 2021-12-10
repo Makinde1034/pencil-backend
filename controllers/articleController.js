@@ -81,7 +81,7 @@ exports.likeUnlikeArticle = async(req,res) => {
 }
 
 
-exports.getPostsByLikes = async (req, res)=>{
+exports.getLikedPosts = async (req, res)=>{
     try{
         const userId = req.body.userId
         const _posts = await Likes.aggregate([
