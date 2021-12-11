@@ -83,7 +83,7 @@ exports.likeUnlikeArticle = async(req,res) => {
 
 exports.getLikedPosts = async (req, res)=>{
     try{
-        const userId = req.body.userId
+        const userId = req.params.id
         const _posts = await Likes.aggregate([
             {$match: {
                 userId: mongoose.Types.ObjectId(userId)
