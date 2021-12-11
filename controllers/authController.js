@@ -82,7 +82,7 @@ exports.signIn = async (req,res) =>{
 
         const user = await User.findOne({email});
 
-        const userVerified = user.verified
+        // const userVerified = user.verified
 
         // if(!userVerified){
         //     res.status(404).json("Account has to be verified")
