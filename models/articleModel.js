@@ -20,7 +20,8 @@ const articleSchema = new Schema({
     likes: {
         type: Number,
         default: 0
-    }
+    },
+    comments : []
 },{ timestamps: true })
 
 module.exports = mongoose.model("article",articleSchema);

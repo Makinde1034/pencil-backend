@@ -81,7 +81,7 @@ exports.likeUnlikeArticle = async(req,res) => {
 }
 
 
-exports.getLikedPosts = async (req, res)=>{
+exports.getLikedPosts = async (req, res)=>{ 
     try{
         const userId = req.params.id
         const _posts = await Likes.aggregate([
@@ -114,4 +114,24 @@ exports.getUserPosts = (req,res) =>{
     User.findById(req.params.id).populate("posts").then((result)=>{
         res.json(result)
     })
+}
+
+// add a comment
+exports.addComment = (req,res) =>{
+
+    User.findOne({_id:req.user_id}).then((user)=>{
+        return Post.findByIdAndUpdate(
+            {_id:req.body.postId},
+            {
+                $push:{
+                    comments : { comment: req.body.comment, creator : user.email}
+                }
+            }
+        ).then((result)=>{
+            res.json(result);
+        }).catch(err=>{
+            res.json(err.msg);
+        })
+    })
+    
 }

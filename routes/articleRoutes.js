@@ -8,6 +8,7 @@ articleRoute.post("/post",verify_access,articleController.postArticle);
 articleRoute.post("/like",verify_access,articleController.likeUnlikeArticle);
 articleRoute.get("/get-user-likes/:id",articleController.getLikedPosts);
 articleRoute.get("/get-all-posts",articleController.getAllPosts);
-articleRoute.get("/user-posts/:id",articleController.getUserPosts)
+articleRoute.get("/user-posts/:id",articleController.getUserPosts);
+articleRoute.post("/add-comment",verify_access,articleController.addComment);
 
 module.exports = articleRoute
