@@ -2,6 +2,7 @@ const User = require("../models/authModel.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const multer = require("multer")
 require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
@@ -150,5 +151,52 @@ exports.verifyAccount = async (req,res) =>{
 exports.findUser = (req,res) =>{
     User.find().then((result)=>{
         res.json(result)
+    })
+}
+
+// image upload 
+
+const Storage = multer.diskStorage({
+    destination : "uploads",
+    filename : (req,file,cb) =>{
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null,file.fieldname + "-" + uniqueSuffix)
+    }
+})
+
+const upload = multer({
+    storage : Storage,
+
+}).single("image")
+
+exports.updateUserProfile=(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            res.json("An error occured")
+        }else{
+            User.findByIdAndUpdate(
+                {_id:req.user_id},
+                { 
+                    $set:{
+                        image: {
+                        data : req.file.filename,
+                        contentType : "image/png"
+                        },
+                        username: req.body.username,
+                        email : req.body.email,
+                        password : req.body.password,
+                        bio : req.body.bio
+                    }
+                    
+                   
+                    
+                }
+            ).then((result)=>{
+                res.json(result)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+        // console.log(req.file)
     })
 }
