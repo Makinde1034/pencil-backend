@@ -9,7 +9,7 @@ authRoute.post("/signup",authController.signUp);
 authRoute.post("/signin",cors(),authController.signIn);
 authRoute.get("/verify/:accessToken",authController.verifyAccount);
 authRoute.get("/user",authController.findUser);
-authRoute.post ("/update-profile/",verify_access,authController.updateUserProfile)
+authRoute.post ("/update-profile",verify_access,authController.updateUserProfile)
 
 
 

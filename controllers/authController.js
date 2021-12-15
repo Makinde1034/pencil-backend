@@ -169,8 +169,9 @@ const upload = multer({
 
 }).single("image")
 
-exports.updateUserProfile=(req,res)=>{
+exports.updateUserProfile= async(req,res)=>{
     upload(req,res,(err)=>{
+        
         if(err){
             res.json("An error occured")
         }else{
@@ -184,7 +185,6 @@ exports.updateUserProfile=(req,res)=>{
                         },
                         username: req.body.username,
                         email : req.body.email,
-                        password : req.body.password,
                         bio : req.body.bio
                     }
                     
