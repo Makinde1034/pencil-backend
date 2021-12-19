@@ -97,7 +97,7 @@ exports.signIn = async (req,res) =>{
                 user
             })
         }
-        res.status(400).send("email or password incorrect");
+        res.status(400).json({msg:"Email or password is incorrect"});
     }catch(err){
         console.log(err)
     }
