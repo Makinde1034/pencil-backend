@@ -89,14 +89,8 @@ exports.signIn = async (req,res) =>{
         //     res.status(404).json("Account has to be verified")
         // }
         
-        if(user && bcrypt.compare(password,user.password)){
-            const token = jwt.sign(
-                {user_id : user._id},
-                process.env.ACCESS_TOKEN,
-                {
-                    expiresIn : "24h"
-                }
-            )
+        if(user && ( await bcrypt.compare(password,user.password)) ){
+            const token = jwt.sign({user_id : user._id},process.env.ACCESS_TOKEN,{expiresIn : "24h"})
 
             res.status(200).json({
                 token,

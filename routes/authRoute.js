@@ -2,6 +2,7 @@ const express = require("express");
 const authController = require("../controllers/authController.js");
 const cors = require("cors");
 const {verify_access} = require("../middlewares/verify_access.js");
+const { body,validationResult,check } = require('express-validator');
 
 const authRoute = express.Router();
 
