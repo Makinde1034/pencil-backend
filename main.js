@@ -3,19 +3,21 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/authRoute.js");
 const articleRoute = require("./routes/articleRoutes.js");
 const cors = require("cors");
+const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pencil?retryWrites=true&w=majority"
+
 
 const app = express();
 
-const corsOptions = {
-    origin : "*",
-    optionsSuccessStatus : 200
-};
+// const corsOptions = {
+//     origin : "*",
+//     optionsSuccessStatus : 200
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 
-const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pencil?retryWrites=true&w=majority"
+
 
 
 
