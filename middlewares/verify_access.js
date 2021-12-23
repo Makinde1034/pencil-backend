@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 exports.verify_access = (req,res,next) => {
     const token = req.headers["x-access-token"] 
-    console.loog('token here: ', token)
+    console.log('token here: ', token)
     if(!token){
         return res.status(401).json({
             msg : "No token found"
