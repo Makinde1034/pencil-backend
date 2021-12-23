@@ -174,8 +174,10 @@ exports.updateUserProfile= async(req,res)=>{
                 { 
                     $set:{
                         image: {
-                        data : req.file.filename,
-                        contentType : "image/png"
+                            // data : req.file.filename,
+                            // contentType : "image/png",
+                            data : '',
+                            contentType : ""
                         },
                         username: req.body.username,
                         email : req.body.email,
