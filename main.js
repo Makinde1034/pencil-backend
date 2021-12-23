@@ -10,7 +10,7 @@ const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pen
 const app = express();
 
 const corsOptions = {
-    origin : "*",
+    origin : "http://localhost:8080",
     optionsSuccessStatus : 200
 };
 
