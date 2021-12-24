@@ -164,35 +164,19 @@ const upload = multer({
 }).single("image")
 
 exports.updateUserProfile= async(req,res)=>{
-    upload(req,res,(err)=>{
-        
-        if(err){
-            res.json("An error occured")
-        }else{
-            User.findByIdAndUpdate(
-                {_id:req.user_id},
-                { 
-                    $set:{
-                        image: {
-                            // data : req.file.filename,
-                            // contentType : "image/png",
-                            data : '',
-                            contentType : ""
-                        },
-                        username: req.body.username,
-                        email : req.body.email,
-                        bio : req.body.bio
-                    }
-                    
-                   
-                    
-                }
-            ).then((result)=>{
-                res.json(result)
-            }).catch((err)=>{
-                console.log(err)
-            })
+    User.findByIdAndUpdate(
+        {_id:req.user_id},
+        {
+            $set : {
+                bio : req.body.bio,
+                username : req.body.username,
+                image : req.body.image
+
+            }
         }
-        // console.log(req.file)
+    ).then((result)=>{
+        res.json(result);
+    }).catch((err)=>{
+        res.json(err);
     })
 }

@@ -7,8 +7,7 @@ const userSchema = new Schema({
         type : String
     },
     image :{
-        data:Buffer,
-        contentType:String
+        type : String
     },
     bio : {
         type : String
