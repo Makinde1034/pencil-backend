@@ -133,3 +133,11 @@ exports.addComment = (req,res) =>{
     })
     
 }
+
+exports.deletePost = (req,res) =>{
+    Post.findByIdAndDelete({_id : req.body.postId}).then((result)=>{
+        res.status(200).json(result);
+    }).catch((err)=>{
+        res.json("An error occured.")
+    })
+}
