@@ -11,6 +11,9 @@ const articleSchema = new Schema({
         type : String
  
     },
+    creatorImage :{
+        type : String
+    },
     title : {
         type : String
     },

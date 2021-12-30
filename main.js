@@ -9,14 +9,14 @@ const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pen
 
 const app = express();
 
-const corsOptions = {
-    origin : "http://localhost:8080",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    optionsSuccessStatus : 200
-};
+// const corsOptions = {
+//     origin : "http://localhost:8080",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     preflightContinue: false,
+//     optionsSuccessStatus : 200
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // app.use(function(req, res, next) {
 //    res.header("Access-Control-Allow-Origin", "*");

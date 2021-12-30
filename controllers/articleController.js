@@ -7,9 +7,7 @@ const mongoose = require("mongoose");
 // post an article
 exports.postArticle = (req,res) => {
     User.findOne({_id:req.user_id}).then(hh=>{
-        // res.json(hh)
-        console.log(hh.email,  ' hh here')
-        Post.create({userId: req.user_id, creator: hh.email, ...req.body}).then((result)=>{
+        Post.create({userId: req.user_id, creatorImage: hh.image, creator: hh.email, ...req.body}).then((result)=>{
             return User.findByIdAndUpdate(
                 {_id : req.user_id},
                 {
