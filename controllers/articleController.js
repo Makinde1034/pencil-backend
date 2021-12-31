@@ -103,7 +103,7 @@ exports.getLikedPosts = async (req, res)=>{
 }
 
 exports.getAllPosts = (req,res) =>{
-    Post.find().then((result)=>{
+    Post.find().sort({_id : -1}).then((result)=>{
         res.json(result)
     })
 }

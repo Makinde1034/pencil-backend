@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
-const multer = require("multer")
+const multer = require("multer");
+const { json } = require("express");
 require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
@@ -186,11 +187,34 @@ exports.updateUserProfile= async(req,res)=>{
 // follow user
 exports.followUser = async(req,res) =>{
     Follow.create({userId : req.body.userId, senderId : req.user_id}).then((result)=>{
-        res.json(result);
+        return User.findByIdAndUpdate(
+            {_id : req.user_id},
+            {
+                $push : {
+                    following : req.body.userId
+                }
+            }
+        ).then(()=>{
+            return User.findByIdAndUpdate(
+                {_id : req.body.userId},
+                {
+                    $push : {
+                        followers : req.user_id
+                    }
+                }
+            ).then(()=>{
+                res.json(result);
+            })
+        })
+        
     }).catch((err)=>[
-        res.json("An error occured")
+        res.json(err.message)
+
     ])
 }
+
+
+// get followers
 
 exports.getFollowers= async(req,res)=>{
     try{
