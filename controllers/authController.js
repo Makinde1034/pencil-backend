@@ -1,6 +1,8 @@
 const User = require("../models/authModel.js");
+const Follow = require("../models/followModel.js")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
 const multer = require("multer")
 require("dotenv").config();
@@ -179,4 +181,41 @@ exports.updateUserProfile= async(req,res)=>{
     }).catch((err)=>{
         res.json(err);
     })
+}
+
+// follow user
+exports.followUser = async(req,res) =>{
+    Follow.create({userId : req.body.userId, senderId : req.user_id}).then((result)=>{
+        res.json(result);
+    }).catch((err)=>[
+        res.json("An error occured")
+    ])
+}
+
+exports.getFollowers= async(req,res)=>{
+    try{
+        const followers = await Follow.aggregate([
+            {
+                $match : {
+                    userId : mongoose.Types.ObjectId(req.user_id)
+                }
+            },
+            {
+                $lookup : {
+                    from : "users",
+                    localField : 'senderId',
+                    foreignField : '_id',
+                    as : 'user'
+
+                }
+            },
+            {$unwind: { path: '$user', preserveNullAndEmptyArrays: true }}
+            
+        ])
+        res.json(followers);
+        
+    }catch(err){
+        res.json(err);console.log(err.message);
+    }
+    
 }

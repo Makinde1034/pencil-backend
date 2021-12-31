@@ -37,11 +37,19 @@ const userSchema = new Schema({
             ref : "article"
         }
     ],
+    following : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "user"
+        }
+    ],
 
-    followers : {
-        type : Number,
-        default : 0
-    },
+    followers : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "user"
+        }
+    ],
 
     favourited : [
         {
