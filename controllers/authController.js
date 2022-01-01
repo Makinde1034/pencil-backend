@@ -215,7 +215,7 @@ exports.followUser = async(req,res) =>{
 
 
 // get followers
-
+// NOTIFICATION
 exports.getFollowers= async(req,res)=>{
     try{
         const followers = await Follow.aggregate([
