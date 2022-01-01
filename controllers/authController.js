@@ -239,7 +239,17 @@ exports.getFollowers= async(req,res)=>{
         res.json(followers);
         
     }catch(err){
-        res.json(err);console.log(err.message);
+        res.json(err);console.log(err.message);              
     }
     
+}
+
+exports.isUserFollowing = async(req,res)=>{
+    const isFollowing = await Follow.exists({userId:req.body.userId, senderId : req.user_id});  
+    
+    if(isFollowing){
+        res.json(true);
+    }else{
+        res.json(false)
+    }
 }

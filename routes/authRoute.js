@@ -13,6 +13,7 @@ authRoute.get("/user",authController.findUser);
 authRoute.post("/update-profile",verify_access,authController.updateUserProfile);
 authRoute.post("/follow",verify_access,authController.followUser)
 authRoute.get("/get-followers",verify_access,authController.getFollowers)
+authRoute.post("/check-follow",verify_access,authController.isUserFollowing)
 
 
 
