@@ -215,7 +215,6 @@ exports.followUser = async(req,res) =>{
 
 
 // get followers
-// NOTIFICATION
 exports.getFollowers= async(req,res)=>{
     try{
         const followers = await Follow.aggregate([
@@ -252,4 +251,12 @@ exports.isUserFollowing = async(req,res)=>{
     }else{
         res.json(false)
     }
+}
+
+exports.unfollowUser = (req,res) =>{
+    Follow.deleteOne({userId : req.body.userId, senderId : req.user_id}).then((result)=>{
+        res.status(200).json(result)
+    }).catch((err)=>{
+        res.json(err)
+    })
 }
