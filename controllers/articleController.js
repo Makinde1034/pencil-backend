@@ -38,6 +38,7 @@ exports.likeUnlikeArticle = async(req,res) => {
     if(alreadyLiked){
         await Likes.deleteOne({userId: req.user_id, postId: req.params.id})
         await Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 } }) 
+         res.status(200).json("post unliked")
        
     }else{
         await Likes.create({
