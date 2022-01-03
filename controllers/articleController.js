@@ -33,19 +33,22 @@ exports.postArticle = (req,res) => {
 exports.likeUnlikeArticle = async(req,res) => {
 
 
-    const alreadyLiked = await Likes.exists({userId: req.user_id, postId: req.body.postId});
+    const alreadyLiked = await Likes.exists({userId: req.user_id, postId: req.params.id});
 
     if(alreadyLiked){
-        await Likes.deleteOne({userId: user_id, postId: post_id})
-        await Post.updateOne({ _id: post_id }, { $inc: { likes: -1 } }) 
+        await Likes.deleteOne({userId: req.user_id, postId: req.params.id})
+        await Post.updateOne({ _id: req.params.id }, { $inc: { likes: -1 } }) 
        
     }else{
         await Likes.create({
-            userId: user_id,
-            postId: post_id
+            userId: req.user_id,
+            postId: req.params.id
         })
-        await Post.updateOne({ _id: post_id }, { $inc: { likes: 1 } })
+        await Post.updateOne({ _id: req.params.id }, { $inc: { likes: 1 } })
+
+        res.status(200).json("post liked")
     }
+
 
 
 

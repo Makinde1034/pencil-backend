@@ -5,7 +5,7 @@ const { verify_access } = require("../middlewares/verify_access.js");
 const articleRoute = express.Router();
 
 articleRoute.post("/post",verify_access,articleController.postArticle);
-articleRoute.post("/like",verify_access,articleController.likeUnlikeArticle);
+articleRoute.post("/like/:id",verify_access,articleController.likeUnlikeArticle);
 articleRoute.get("/get-user-likes/:id",articleController.getLikedPosts);
 articleRoute.get("/get-all-posts",articleController.getAllPosts);
 articleRoute.get("/user-posts/:id",articleController.getUserPosts);
