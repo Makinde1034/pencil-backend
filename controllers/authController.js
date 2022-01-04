@@ -21,6 +21,11 @@ exports.signUp = async (req,res) => {
     try{
         const {username, email, password} = req.body
 
+        // check if  passsword lengthis greater than 6
+        if(password.length < 6){
+            throw new Error("Password must be at least six characters long")
+        }
+
         // check if username exists in database
         const emailExists = await User.findOne({email})
 
@@ -73,6 +78,7 @@ exports.signUp = async (req,res) => {
 
     }catch(err){
         console.log(err);
+        res.json(err.message)
     }
    
 
