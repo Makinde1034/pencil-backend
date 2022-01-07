@@ -5,7 +5,7 @@ const articleRoute = require("./routes/articleRoutes.js");
 require("dotenv").config();
 const cors = require("cors");
 const durl = "mongodb+srv://Makinde1034:Makinde1034@pencil.2ym6k.mongodb.net/Pencil?retryWrites=true&w=majority"
-
+const {join } = require('path')
 
 const app = express();
 
@@ -31,6 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(authRoute);
 app.use(articleRoute);
+
+var uploadFolder = express.static(join(__dirname, '/uploads/'));
+
+// app.use('/uploads', uploadFolder)
 
 
 

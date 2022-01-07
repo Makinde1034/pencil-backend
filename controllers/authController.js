@@ -173,6 +173,7 @@ const upload = multer({
 }).single("image")
 
 exports.updateUserProfile= async(req,res)=>{
+    // console.log(req.body)
     User.findByIdAndUpdate(
         {_id:req.user_id},
         {
