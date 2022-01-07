@@ -12,7 +12,7 @@ const articleSchema = new Schema({
  
     },
     creatorImage :{
-        type : Binary
+        type : String
     },
     title : {
         type : String
