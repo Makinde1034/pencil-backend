@@ -9,14 +9,13 @@ const {join } = require('path')
 
 const app = express();
 
-// const corsOptions = {
-//     origin : "http://localhost:8080",
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     preflightContinue: false,
-//     optionsSuccessStatus : 200
-// };
+const corsOptions = {
+    origin : "http://localhost:8080",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus : 200
+};
 
-app.use(cors());
 
 // app.use(function(req, res, next) {
 //    res.header("Access-Control-Allow-Origin", "*");
@@ -28,6 +27,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use(authRoute);
 app.use(articleRoute);
