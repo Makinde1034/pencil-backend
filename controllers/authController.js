@@ -81,7 +81,7 @@ exports.signUp = async (req,res) => {
 
     }catch(err){
         console.log(err);
-        res.json(err.message)
+        res.json(err)
     }
    
 
