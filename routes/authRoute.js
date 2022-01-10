@@ -6,7 +6,16 @@ const { body,validationResult,check } = require('express-validator');
 
 const authRoute = express.Router();
 
-authRoute.post("/signup",authController.signUp);
+authRoute.post(
+    "/signup",
+    check('password')
+        .isLength({ min: 5 })
+        .withMessage('password must be at least 5 chars long'),
+        
+    authController.signUp,
+    
+);
+
 authRoute.post("/signin",cors(),authController.signIn);
 authRoute.get("/verify/:accessToken",authController.verifyAccount);
 authRoute.get("/user",authController.findUser);

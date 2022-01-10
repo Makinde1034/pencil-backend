@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 const { json } = require("express");
+const { validationResult } = require("express-validator")
 require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
@@ -19,12 +20,13 @@ const transporter = nodemailer.createTransport({
 
 exports.signUp = async (req,res) => {                                                  
     try{
-        const {username, email, password} = req.body
 
-        // check if  passsword lengthis greater than 6
-        if(password.length < 6){
-            throw new Error("Password must be at least six characters long")
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors:"Password must be 5 letters long." });
         }
+        const {username, email, password} = req.body
+   
 
         // check if username exists in database
         const emailExists = await User.findOne({email})
