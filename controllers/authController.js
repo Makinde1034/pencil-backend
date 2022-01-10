@@ -23,7 +23,8 @@ exports.signUp = async (req,res) => {
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors:"Password must be 5 letters long." });
+            // return res.status(400).json({ errors:"Password must be 5 letters long." });
+            throw new Error("Password must be at least 5 letters long")
         }
         const {username, email, password} = req.body
    
