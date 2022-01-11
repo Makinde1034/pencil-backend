@@ -270,3 +270,11 @@ exports.unfollowUser = (req,res) =>{
         res.json(err)
     })
 }
+
+exports.getUserProfile = (req,res) => {
+    User.findById({_id : req.user_id}).then((result)=>{
+        res.status(200).json(result);
+    }).catch((err)=>{
+        res.json(err)
+    })
+}

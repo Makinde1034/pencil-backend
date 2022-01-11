@@ -20,10 +20,11 @@ authRoute.post("/signin",cors(),authController.signIn);
 authRoute.get("/verify/:accessToken",authController.verifyAccount);
 authRoute.get("/user",authController.findUser);
 authRoute.post("/update-profile",verify_access,authController.updateUserProfile);
-authRoute.post("/follow",verify_access,authController.followUser)
-authRoute.post("/unfollow",verify_access,authController.unfollowUser)
-authRoute.get("/get-followers",verify_access,authController.getFollowers)
-authRoute.post("/check-follow",verify_access,authController.isUserFollowing)
+authRoute.post("/follow",verify_access,authController.followUser);
+authRoute.post("/unfollow",verify_access,authController.unfollowUser);
+authRoute.get("/get-followers",verify_access,authController.getFollowers);
+authRoute.post("/check-follow",verify_access,authController.isUserFollowing);
+authRoute.get("/getUserProfile",verify_access,authController.getUserProfile);
 
 
 
