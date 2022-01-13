@@ -104,10 +104,31 @@ exports.getLikedPosts = async (req, res)=>{
     }
 }
 
-exports.getAllPosts = (req,res) =>{
-    Post.find().sort({_id : -1}).then((result)=>{
-        res.json(result)
-    })
+exports.getAllPosts = async (req,res) =>{
+    // Post.find().sort({_id : -1}).then((result)=>{
+    //     res.json(result)
+    // })
+    const allPosts = await  Post.aggregate([
+        {
+            $lookup : {
+                from : "users",
+                localField : "userId",
+                foreignField : "_id",
+                as : "creator"
+            }
+             
+        },
+        {$unwind: { path: '$creator', preserveNullAndEmptyArrays: true }},
+        // {
+        //     $project : {
+        //         image : "creator.creatorImage"
+        //     }
+        // }
+
+        
+    ]).sort({_id : -1}).exec()
+    console.log(allPosts)
+    res.json(allPosts)
 }
 
 exports.getUserPosts = (req,res) =>{
