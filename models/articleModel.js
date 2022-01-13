@@ -7,13 +7,7 @@ const articleSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
-    creator : {
-        type : String
- 
-    },
-    creatorImage :{
-        type : String
-    },
+
     title : {
         type : String
     },

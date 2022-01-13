@@ -6,27 +6,24 @@ const mongoose = require("mongoose");
 
 // post an article
 exports.postArticle = (req,res) => {
-    User.findOne({_id:req.user_id}).then(hh=>{
-        Post.create({userId: req.user_id, creatorImage: hh.image, creator: hh.email, ...req.body}).then((result)=>{
-            return User.findByIdAndUpdate(
-                {_id : req.user_id},
-                {
-                    $push : {
-                        posts : result._id
-                    }
+    
+    Post.create({userId: req.user_id, ...req.body}).then((result)=>{
+        return User.findByIdAndUpdate(
+            {_id : req.user_id},
+            {
+                $push : {
+                    posts : result._id
                 }
-            ).then((post)=>{ 
-                res.status(200).json(result)                              
-            }).catch((err)=>{
-                res.status(404).json("An error occured while trying to create post");
-            })
+            }
+        ).then((post)=>{ 
+            res.status(200).json(result)                              
         }).catch((err)=>{
-            res.json("Error occured while trying to create post");
+            res.status(404).json("An error occured while trying to create post");
         })
     }).catch((err)=>{
-        console.log(err.message)
-        res.json("An error occured while")
-    })    
+        res.json("Error occured while trying to create post");
+    })
+     
 } 
 
 // like a post
@@ -85,9 +82,11 @@ exports.getLikedPosts = async (req, res)=>{
     try{
         const userId = req.params.id
         const _posts = await Likes.aggregate([
-            {$match: {
-                userId: mongoose.Types.ObjectId(userId)
-            }},
+            {
+                $match: {
+                    userId: mongoose.Types.ObjectId(userId)
+                }
+            },
             {$lookup:{
                 from: 'articles',
                 localField: 'postId',
@@ -127,14 +126,32 @@ exports.getAllPosts = async (req,res) =>{
 
         
     ]).sort({_id : -1}).exec()
-    console.log(allPosts)
     res.json(allPosts)
 }
 
-exports.getUserPosts = (req,res) =>{
-    User.findById(req.params.id).populate("posts").then((result)=>{
-        res.json(result)
-    })
+exports.getUserPosts = async(req,res) =>{
+    // User.findById(req.params.id).populate("posts").then((result)=>{
+    //     res.json(result)
+    // })
+    const userPosts = await Post.aggregate([
+        {
+            $match:{
+                userId :  mongoose.Types.ObjectId(req.params.id)
+            }
+        },
+        {
+            $lookup:{
+                from : "users",
+                localField : "userId",
+                foreignField : "_id",
+                as : "creator"
+            }
+        },
+        {$unwind: { path: '$creator', preserveNullAndEmptyArrays: true }},
+    ]).exec()
+
+    console.log(userPosts)
+    res.status(200).json(userPosts)
 }
 
 // add a comment
