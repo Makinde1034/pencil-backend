@@ -95,7 +95,7 @@ exports.signUp = async (req,res) => {
         //     accessToken
         // })
         res.status(200).json({
-            message : `verification email sent to ${email}`
+            message : ` Welcome ${username}, verification email has been sent to ${email}`
         })
         
 
@@ -117,11 +117,11 @@ exports.signIn = async (req,res) =>{
 
         const user = await User.findOne({email});
 
-        // const userVerified = user.verified
+        const userVerified = user.verified
 
-        // if(!userVerified){
-        //     res.status(404).json("Account has to be verified")
-        // }
+        if(!userVerified){
+            res.status(404).json("Account has to be verified")
+        }
         
         if(user && ( await bcrypt.compare(password,user.password)) ){
             const token = jwt.sign({user_id : user._id},process.env.ACCESS_TOKEN,{expiresIn : "24h"})
