@@ -6,8 +6,13 @@ const mongoose = require("mongoose")
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 const { json } = require("express");
-const { validationResult } = require("express-validator")
+const { validationResult } = require("express-validator");
+const hbs = require('nodemailer-express-handlebars')
+const path = require("path");
 require("dotenv").config();
+
+
+
 
 const transporter = nodemailer.createTransport({
     service:"Gmail",
@@ -15,7 +20,19 @@ const transporter = nodemailer.createTransport({
         user : process.env.email,
         pass : process.env.password
     }
-})
+});
+
+const handlebarOptions = {
+    viewEngine: {
+        partialsDir: path.resolve('./views/'),
+        defaultLayout: false,
+    },
+    viewPath: path.resolve('./views/'),
+};
+
+// use a template file with nodemailer
+transporter.use('compile', hbs(handlebarOptions))
+
 
 
 exports.signUp = async (req,res) => {                                                  
@@ -64,7 +81,12 @@ exports.signUp = async (req,res) => {
             from : process.env.email,
             to : email,
             subject :"Verify Email",
-            html: `<p>Click <a href=${url}>here</a> to confirm your email</p>`
+            template: 'confirmEmail',
+            context : {
+                email : email,
+                url :url
+            }
+            // html: `<p>Click <a href=${url}>here</a> to confirm your email</p>`
              
         })
 
