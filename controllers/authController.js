@@ -88,6 +88,11 @@ exports.signUp = async (req,res) => {
             }
             // html: `<p>Click <a href=${url}>here</a> to confirm your email</p>`
              
+        },(err)=>{
+            if(err){
+               return  res.json("An error occured ")
+               console.log(err);
+            }
         })
 
         // res.status(200).json({
@@ -120,12 +125,12 @@ exports.signIn = async (req,res) =>{
         const userVerified = user.verified
 
         if(!userVerified){
-            res.status(404).json("Account has to be verified")
+            res.status(404).json({msg:"Account has to be verified"})
         }
         
         if(user && ( await bcrypt.compare(password,user.password)) ){
             const token = jwt.sign({user_id : user._id},process.env.ACCESS_TOKEN,{expiresIn : "24h"})
-
+        
             return res.status(200).json({
                 token,
                 user
